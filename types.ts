@@ -26,6 +26,7 @@ export interface SiteConfig {
   adminSurname?: string; // Manager's surname
   themeColor: string;
   tagline: string;
+  customDomain?: string; // e.g. "farahcakes.com"
   maxItems: number; // Maximum number of items allowed
 }
 
@@ -37,5 +38,6 @@ export enum AdminView {
   DASHBOARD = 'DASHBOARD',
   CAKES = 'CAKES',
   COUPONS = 'COUPONS',
-  CATEGORIES = 'CATEGORIES'
+  CATEGORIES = 'CATEGORIES',
+  DOMAINS = 'DOMAINS'
 }

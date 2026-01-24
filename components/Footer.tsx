@@ -15,7 +15,7 @@ const Footer: React.FC<FooterProps> = ({ onStaffClick, siteName, phone }) => {
           <h3 className="text-white text-2xl font-serif mb-6">{siteName}</h3>
           <p className="max-w-xs mx-auto md:mx-0">Freshly generated boutique bakery experience. Handcrafted with love.</p>
         </div>
-        
+
         <div>
           <h4 className="text-white font-semibold mb-6">Contact</h4>
           <ul className="space-y-3">
@@ -23,12 +23,12 @@ const Footer: React.FC<FooterProps> = ({ onStaffClick, siteName, phone }) => {
             <li><a href="#" className="hover:text-primary-yellow transition"><i className="fa-brands fa-whatsapp mr-2"></i> WhatsApp Order</a></li>
           </ul>
         </div>
-        
+
         <div>
           <h4 className="text-white font-semibold mb-6">Manager Access</h4>
           <ul className="space-y-3">
             <li>
-              <button 
+              <button
                 onClick={onStaffClick}
                 className="text-slate-500 hover:text-white text-sm transition font-black uppercase tracking-widest text-[10px]"
               >
@@ -38,9 +38,9 @@ const Footer: React.FC<FooterProps> = ({ onStaffClick, siteName, phone }) => {
           </ul>
         </div>
       </div>
-      
+
       <div className="max-w-4xl mx-auto border-t border-slate-800 mt-12 pt-8 text-center text-[10px] font-bold uppercase tracking-widest opacity-40">
-        <p>&copy; {new Date().getFullYear()} {siteName}. Generated with <button onClick={() => window.location.hash = ''} className="hover:text-white transition-colors cursor-pointer outline-none">Heaven Engine</button>.</p>
+        <p>&copy; {new Date().getFullYear()} {siteName}. Created by <button onClick={() => window.location.hash = ''} className="hover:text-white transition-colors cursor-pointer outline-none">keith ltd</button>.</p>
       </div>
     </footer>
   );

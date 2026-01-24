@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Cake, SiteConfig } from '../types';
 import { generateDescription } from '../services/geminiService';
+import { compressImage } from '../utils/imageOptimizer';
 
 interface AddCakePageProps {
     siteConfig: SiteConfig;
@@ -30,12 +31,16 @@ const AddCakePage: React.FC<AddCakePageProps> = ({
         setIsGenerating(false);
     };
 
-    const handleCakeImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleCakeImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => setFormCake(prev => ({ ...prev, imageUrl: reader.result as string }));
-            reader.readAsDataURL(file);
+            try {
+                const optimizedImage = await compressImage(file);
+                setFormCake(prev => ({ ...prev, imageUrl: optimizedImage }));
+            } catch (err) {
+                console.error("Image compression failed", err);
+                alert("Could not process image. Please try another.");
+            }
         }
     };
 

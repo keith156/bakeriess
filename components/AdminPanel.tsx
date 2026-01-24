@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Cake, Coupon, AdminView, SiteConfig } from '../types';
 import { dbService } from '../services/dbService';
 import { generateDescription } from '../services/geminiService';
+import { compressImage } from '../utils/imageOptimizer';
 
 interface AdminPanelProps {
   cakes: Cake[];
@@ -15,6 +16,8 @@ interface AdminPanelProps {
   siteConfig: SiteConfig;
   onUpdateSite: (config: SiteConfig) => void;
   onAddNewClick?: () => void;
+  isAuthenticated: boolean;
+  setIsAuthenticated: (val: boolean) => void;
 }
 
 const AdminPanel: React.FC<AdminPanelProps> = ({
@@ -22,9 +25,10 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
   coupons, setCoupons,
   categories, setCategories,
   onClose, siteConfig, onUpdateSite,
-  onAddNewClick
+  onAddNewClick,
+  isAuthenticated,
+  setIsAuthenticated
 }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
@@ -123,12 +127,16 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
     setIsGenerating(false);
   };
 
-  const handleCakeImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCakeImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => setFormCake(prev => ({ ...prev, imageUrl: reader.result as string }));
-      reader.readAsDataURL(file);
+      try {
+        const optimizedImage = await compressImage(file);
+        setFormCake(prev => ({ ...prev, imageUrl: optimizedImage }));
+      } catch (err) {
+        console.error("Compression failed", err);
+        alert("Failed to process image.");
+      }
     }
   };
 
@@ -446,6 +454,8 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
             <button onClick={onClose} className="w-full py-8 rounded-[2.5rem] border-4 border-dashed border-slate-100 text-slate-300 font-black uppercase tracking-[0.4em] text-[10px] hover:bg-white hover:text-midnight transition-all active:scale-95">Exit Portal</button>
           </div>
         )}
+
+
       </main>
     </div>
   );

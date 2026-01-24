@@ -32,6 +32,8 @@ const App: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
 
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
+
   // Initial Fetch: Load all sites
   useEffect(() => {
     const fetchSites = async () => {
@@ -56,10 +58,23 @@ const App: React.FC = () => {
 
     const handleRouting = () => {
       const hash = window.location.hash.replace('#/', '');
+      const hostname = window.location.hostname;
+      const savedSites = JSON.parse(localStorage.getItem('bakery_engine_sites') || '[]');
+
+      // 1. Check for Custom Domain Match (Priority)
+      // Exclude localhost/deployment URLs if they are not specifically mapped
+      const domainMatch = savedSites.find((s: SiteConfig) => s.customDomain === hostname);
+
+      if (domainMatch) {
+        setActiveSite(domainMatch);
+        setViewMode('SITE');
+        return;
+      }
+
+      // 2. Fallback to existing Hash Routing
       if (hash === 'generator') {
         setViewMode('GENERATOR');
       } else if (hash) {
-        const savedSites = JSON.parse(localStorage.getItem('bakery_engine_sites') || '[]');
         const found = savedSites.find((s: SiteConfig) => s.slug === hash);
         if (found) {
           setActiveSite(found);
@@ -403,6 +418,8 @@ const App: React.FC = () => {
             setIsAdminOpen(false);
             setIsAddingCake(true);
           }}
+          isAuthenticated={isAdminAuthenticated}
+          setIsAuthenticated={setIsAdminAuthenticated}
         />
       )}
     </div>

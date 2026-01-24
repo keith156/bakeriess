@@ -16,16 +16,16 @@ const SuperAdminDashboard: React.FC<SuperAdminDashboardProps> = ({ sites, onSele
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  
+
   const [activeTab, setActiveTab] = useState<'SITES' | 'DEFAULTS'>('SITES');
   const [globalCakes, setGlobalCakes] = useState<Cake[]>([]);
   const [globalCategories, setGlobalCategories] = useState<string[]>([]);
   const [isAddingCake, setIsAddingCake] = useState(false);
   const [newCake, setNewCake] = useState<Partial<Cake>>({ category: 'Birthday' });
-  
+
   // Site Editing state
   const [editingSite, setEditingSite] = useState<SiteConfig | null>(null);
-  
+
   const cakeImageRef = useRef<HTMLInputElement>(null);
   const siteLogoRef = useRef<HTMLInputElement>(null);
 
@@ -117,11 +117,11 @@ const SuperAdminDashboard: React.FC<SuperAdminDashboardProps> = ({ sites, onSele
             <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest mt-2">Heaven Multi-Tenant Platform</p>
           </div>
           <form onSubmit={handleLogin} className="space-y-4">
-            <input 
+            <input
               type="text" className="w-full p-5 bg-[#f4f7f9] rounded-2xl outline-none font-bold text-midnight border-2 border-transparent focus:border-primary-yellow transition-all"
               value={username} onChange={e => setUsername(e.target.value)} placeholder="Username"
             />
-            <input 
+            <input
               type="password" className="w-full p-5 bg-[#f4f7f9] rounded-2xl outline-none font-bold text-midnight border-2 border-transparent focus:border-primary-yellow transition-all"
               value={password} onChange={e => setPassword(e.target.value)} placeholder="Password"
             />
@@ -168,13 +168,13 @@ const SuperAdminDashboard: React.FC<SuperAdminDashboardProps> = ({ sites, onSele
                 {sites.map(site => (
                   <div key={site.id} className="bg-white rounded-[3.5rem] p-10 shadow-card border border-slate-50 relative group overflow-hidden animate-fade-up">
                     <div className="absolute top-0 right-0 w-40 h-40 opacity-10 -mr-16 -mt-16 rounded-full bg-[#FEF3C7] group-hover:scale-110 transition-transform duration-700" />
-                    
+
                     <div className="flex items-center gap-5 mb-10 relative z-10">
                       <div className="w-20 h-20 rounded-[1.5rem] bg-white shadow-card flex items-center justify-center overflow-hidden shrink-0 border border-slate-50">
                         {site.logo ? (
                           <img src={site.logo} className="w-full h-full object-cover" />
                         ) : (
-                          <div style={{backgroundColor: site.themeColor}} className="w-full h-full flex items-center justify-center text-midnight font-serif font-bold italic text-3xl">
+                          <div style={{ backgroundColor: site.themeColor }} className="w-full h-full flex items-center justify-center text-midnight font-serif font-bold italic text-3xl">
                             {site.name.charAt(0)}
                           </div>
                         )}
@@ -186,7 +186,7 @@ const SuperAdminDashboard: React.FC<SuperAdminDashboardProps> = ({ sites, onSele
                           <span className="text-[11px] font-black text-[#A5B4FC] uppercase tracking-widest truncate">/{site.slug}</span>
                         </div>
                       </div>
-                      <button 
+                      <button
                         onClick={() => setEditingSite(site)}
                         className="w-10 h-10 rounded-full bg-slate-50 text-slate-300 hover:text-midnight transition-colors flex items-center justify-center shrink-0"
                       >
@@ -205,17 +205,17 @@ const SuperAdminDashboard: React.FC<SuperAdminDashboardProps> = ({ sites, onSele
                       <div className="bg-[#f4f7f9] p-8 rounded-[2rem] text-center flex flex-col items-center justify-center relative group/item">
                         <p className="text-[11px] font-black text-[#A5B4FC] uppercase tracking-widest mb-2">Items</p>
                         <div className="flex items-baseline gap-1">
-                           <p className="text-4xl font-bold text-[#3B2F2F] leading-none">{getCakeCountForSite(site.id)}</p>
-                           <div className="flex items-center text-[10px] font-black text-[#A5B4FC] uppercase">
-                             <span className="mr-0.5">/</span>
-                             <input 
-                                type="number" 
-                                value={site.maxItems || 100}
-                                onChange={(e) => onUpdateSite({ ...site, maxItems: Number(e.target.value) })}
-                                className="w-12 bg-white/50 px-1 py-0.5 rounded border border-transparent focus:border-[#A5B4FC] focus:bg-white outline-none text-center transition-all font-black text-[10px]"
-                                title="Edit Item Limit"
-                             />
-                           </div>
+                          <p className="text-4xl font-bold text-[#3B2F2F] leading-none">{getCakeCountForSite(site.id)}</p>
+                          <div className="flex items-center text-[10px] font-black text-[#A5B4FC] uppercase">
+                            <span className="mr-0.5">/</span>
+                            <input
+                              type="number"
+                              value={site.maxItems || 100}
+                              onChange={(e) => onUpdateSite({ ...site, maxItems: Number(e.target.value) })}
+                              className="w-12 bg-white/50 px-1 py-0.5 rounded border border-transparent focus:border-[#A5B4FC] focus:bg-white outline-none text-center transition-all font-black text-[10px]"
+                              title="Edit Item Limit"
+                            />
+                          </div>
                         </div>
                       </div>
                       <div className="bg-[#f4f7f9] p-8 rounded-[2rem] text-center flex flex-col items-center justify-center">
@@ -228,13 +228,13 @@ const SuperAdminDashboard: React.FC<SuperAdminDashboardProps> = ({ sites, onSele
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <button 
+                      <button
                         onClick={() => onSelect(site)}
                         className="flex-grow bg-[#3B2F2F] text-white py-6 rounded-[1.8rem] font-black uppercase tracking-widest text-[12px] shadow-xl hover:bg-slate-800 transition-all active:scale-95"
                       >
                         Launch Site
                       </button>
-                      <button 
+                      <button
                         onClick={() => onDelete(site.id)}
                         className="w-20 h-20 flex items-center justify-center rounded-[1.8rem] bg-[#FFF5F5] text-[#FF9999] hover:bg-red-100 hover:text-red-500 transition-all active:scale-95 shrink-0"
                       >
@@ -247,7 +247,7 @@ const SuperAdminDashboard: React.FC<SuperAdminDashboardProps> = ({ sites, onSele
             </div>
           ) : (
             <div className="animate-fade-up max-w-4xl mx-auto">
-               <header className="mb-12 flex items-center justify-between">
+              <header className="mb-12 flex items-center justify-between">
                 <div>
                   <h1 className="text-4xl md:text-5xl font-serif font-bold text-midnight leading-tight">System Seeds</h1>
                   <p className="text-slate-400 mt-2 font-medium">Configure initial products for every new boutique launched.</p>
@@ -256,7 +256,7 @@ const SuperAdminDashboard: React.FC<SuperAdminDashboardProps> = ({ sites, onSele
                   <i className="fa-solid fa-plus"></i> Add Seed Cake
                 </button>
               </header>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                 {/* Seed List */}
                 <div className="bg-white p-10 rounded-[3rem] shadow-sm border border-slate-50">
@@ -312,45 +312,49 @@ const SuperAdminDashboard: React.FC<SuperAdminDashboardProps> = ({ sites, onSele
                 <i className="fa-solid fa-times text-xl"></i>
               </button>
             </div>
-            
+
             <form onSubmit={handleSaveEditedSite} className="space-y-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Logo Section */}
                 <div className="space-y-4">
-                   <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Bakery Logo</label>
-                   <div 
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Bakery Logo</label>
+                  <div
                     onClick={() => siteLogoRef.current?.click()}
                     className="aspect-square bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center cursor-pointer overflow-hidden group hover:border-primary-yellow transition-all"
-                   >
-                     {editingSite.logo ? (
-                       <img src={editingSite.logo} className="w-full h-full object-cover" />
-                     ) : (
-                       <div className="text-center p-4">
-                         <i className="fa-solid fa-cloud-arrow-up text-3xl text-slate-300 group-hover:text-primary-yellow mb-4"></i>
-                         <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Upload Logo</p>
-                       </div>
-                     )}
-                     <input type="file" ref={siteLogoRef} onChange={(e) => handleImageUpload(e, 'site')} className="hidden" accept="image/*" />
-                   </div>
+                  >
+                    {editingSite.logo ? (
+                      <img src={editingSite.logo} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="text-center p-4">
+                        <i className="fa-solid fa-cloud-arrow-up text-3xl text-slate-300 group-hover:text-primary-yellow mb-4"></i>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Upload Logo</p>
+                      </div>
+                    )}
+                    <input type="file" ref={siteLogoRef} onChange={(e) => handleImageUpload(e, 'site')} className="hidden" accept="image/*" />
+                  </div>
                 </div>
 
                 {/* Details Section */}
                 <div className="space-y-5">
                   <div className="space-y-1">
                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Bakery Name</label>
-                    <input type="text" className="w-full p-4 bg-slate-50 rounded-xl outline-none font-bold" value={editingSite.name} onChange={e => setEditingSite({...editingSite, name: e.target.value})} />
+                    <input type="text" className="w-full p-4 bg-slate-50 rounded-xl outline-none font-bold" value={editingSite.name} onChange={e => setEditingSite({ ...editingSite, name: e.target.value })} />
                   </div>
                   <div className="space-y-1">
                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Tagline</label>
-                    <input type="text" className="w-full p-4 bg-slate-50 rounded-xl outline-none font-medium text-sm" value={editingSite.tagline} onChange={e => setEditingSite({...editingSite, tagline: e.target.value})} />
+                    <input type="text" className="w-full p-4 bg-slate-50 rounded-xl outline-none font-medium text-sm" value={editingSite.tagline} onChange={e => setEditingSite({ ...editingSite, tagline: e.target.value })} />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-black text-emerald-500 uppercase tracking-widest ml-1">Custom Domain</label>
+                    <input type="text" className="w-full p-4 bg-emerald-50 border border-emerald-100 rounded-xl outline-none font-bold text-midnight" placeholder="e.g. farahcakes.com" value={editingSite.customDomain || ''} onChange={e => setEditingSite({ ...editingSite, customDomain: e.target.value })} />
                   </div>
                   <div className="space-y-1">
                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">WhatsApp Phone</label>
-                    <input type="text" className="w-full p-4 bg-slate-50 rounded-xl outline-none font-bold" value={editingSite.phone} onChange={e => setEditingSite({...editingSite, phone: e.target.value})} />
+                    <input type="text" className="w-full p-4 bg-slate-50 rounded-xl outline-none font-bold" value={editingSite.phone} onChange={e => setEditingSite({ ...editingSite, phone: e.target.value })} />
                   </div>
                   <div className="space-y-1">
                     <label className="text-[10px] font-black text-[#A5B4FC] uppercase tracking-widest ml-1">Item Limit (Max Slots)</label>
-                    <input type="number" className="w-full p-4 bg-blue-50/50 border border-blue-100/50 rounded-xl outline-none font-black text-midnight" value={editingSite.maxItems || 100} onChange={e => setEditingSite({...editingSite, maxItems: Number(e.target.value)})} />
+                    <input type="number" className="w-full p-4 bg-blue-50/50 border border-blue-100/50 rounded-xl outline-none font-black text-midnight" value={editingSite.maxItems || 100} onChange={e => setEditingSite({ ...editingSite, maxItems: Number(e.target.value) })} />
                   </div>
                 </div>
               </div>
@@ -361,16 +365,16 @@ const SuperAdminDashboard: React.FC<SuperAdminDashboardProps> = ({ sites, onSele
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Username</label>
-                    <input type="text" className="w-full p-4 bg-white rounded-xl outline-none font-bold text-sm" value={editingSite.adminUser} onChange={e => setEditingSite({...editingSite, adminUser: e.target.value})} />
+                    <input type="text" className="w-full p-4 bg-white rounded-xl outline-none font-bold text-sm" value={editingSite.adminUser} onChange={e => setEditingSite({ ...editingSite, adminUser: e.target.value })} />
                   </div>
                   <div className="space-y-1">
                     <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Password</label>
-                    <input type="text" className="w-full p-4 bg-white rounded-xl outline-none font-bold text-sm" value={editingSite.adminPass} onChange={e => setEditingSite({...editingSite, adminPass: e.target.value})} />
+                    <input type="text" className="w-full p-4 bg-white rounded-xl outline-none font-bold text-sm" value={editingSite.adminPass} onChange={e => setEditingSite({ ...editingSite, adminPass: e.target.value })} />
                   </div>
                 </div>
                 <div className="space-y-1">
                   <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Manager Surname</label>
-                  <input type="text" className="w-full p-4 bg-white rounded-xl outline-none font-bold text-sm" value={editingSite.adminSurname || ''} onChange={e => setEditingSite({...editingSite, adminSurname: e.target.value})} placeholder="Manager's last name" />
+                  <input type="text" className="w-full p-4 bg-white rounded-xl outline-none font-bold text-sm" value={editingSite.adminSurname || ''} onChange={e => setEditingSite({ ...editingSite, adminSurname: e.target.value })} placeholder="Manager's last name" />
                 </div>
               </div>
 
@@ -396,35 +400,35 @@ const SuperAdminDashboard: React.FC<SuperAdminDashboardProps> = ({ sites, onSele
               </button>
             </div>
             <div className="space-y-6">
-               <div className="flex items-center gap-6 p-6 bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200 group hover:border-primary-yellow transition-all">
-                  <div className="w-24 h-24 bg-white rounded-2xl overflow-hidden shadow-sm flex items-center justify-center text-slate-200">
-                     {newCake.imageUrl ? <img src={newCake.imageUrl} className="w-full h-full object-cover" /> : <i className="fa-solid fa-cake-candles text-3xl"></i>}
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <button onClick={() => cakeImageRef.current?.click()} className="bg-midnight text-white px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md hover:bg-slate-800 transition-all">Upload Photo</button>
-                    {newCake.imageUrl && <button onClick={() => setNewCake({...newCake, imageUrl: ''})} className="text-red-400 text-[9px] font-black uppercase tracking-widest text-center">Remove</button>}
-                  </div>
-                  <input type="file" ref={cakeImageRef} onChange={(e) => handleImageUpload(e, 'cake')} className="hidden" accept="image/*" />
-               </div>
-               <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-1">
-                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Product Name</label>
-                    <input type="text" className="w-full p-4 bg-slate-50 rounded-2xl outline-none font-bold text-midnight border-2 border-transparent focus:border-primary-yellow transition-all" placeholder="e.g. Classic Vanilla" value={newCake.name || ''} onChange={e => setNewCake({...newCake, name: e.target.value})} />
-                  </div>
-                  <div className="space-y-1">
-                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Price (UGX)</label>
-                    <input type="number" className="w-full p-4 bg-slate-50 rounded-2xl outline-none font-bold text-midnight border-2 border-transparent focus:border-primary-yellow transition-all" placeholder="80000" value={newCake.price || ''} onChange={e => setNewCake({...newCake, price: Number(e.target.value)})} />
-                  </div>
-               </div>
-               <div className="space-y-1">
-                  <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Category</label>
-                  <select className="w-full p-4 bg-slate-50 rounded-2xl outline-none font-bold text-midnight border-2 border-transparent focus:border-primary-yellow transition-all" value={newCake.category} onChange={e => setNewCake({...newCake, category: e.target.value})}>
-                    {globalCategories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
-                  </select>
-               </div>
-               <button onClick={handleAddGlobalCake} className="w-full bg-midnight text-white py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] shadow-xl hover:scale-[1.02] active:scale-95 transition-all">
+              <div className="flex items-center gap-6 p-6 bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200 group hover:border-primary-yellow transition-all">
+                <div className="w-24 h-24 bg-white rounded-2xl overflow-hidden shadow-sm flex items-center justify-center text-slate-200">
+                  {newCake.imageUrl ? <img src={newCake.imageUrl} className="w-full h-full object-cover" /> : <i className="fa-solid fa-cake-candles text-3xl"></i>}
+                </div>
+                <div className="flex flex-col gap-2">
+                  <button onClick={() => cakeImageRef.current?.click()} className="bg-midnight text-white px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md hover:bg-slate-800 transition-all">Upload Photo</button>
+                  {newCake.imageUrl && <button onClick={() => setNewCake({ ...newCake, imageUrl: '' })} className="text-red-400 text-[9px] font-black uppercase tracking-widest text-center">Remove</button>}
+                </div>
+                <input type="file" ref={cakeImageRef} onChange={(e) => handleImageUpload(e, 'cake')} className="hidden" accept="image/*" />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Product Name</label>
+                  <input type="text" className="w-full p-4 bg-slate-50 rounded-2xl outline-none font-bold text-midnight border-2 border-transparent focus:border-primary-yellow transition-all" placeholder="e.g. Classic Vanilla" value={newCake.name || ''} onChange={e => setNewCake({ ...newCake, name: e.target.value })} />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Price (UGX)</label>
+                  <input type="number" className="w-full p-4 bg-slate-50 rounded-2xl outline-none font-bold text-midnight border-2 border-transparent focus:border-primary-yellow transition-all" placeholder="80000" value={newCake.price || ''} onChange={e => setNewCake({ ...newCake, price: Number(e.target.value) })} />
+                </div>
+              </div>
+              <div className="space-y-1">
+                <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Category</label>
+                <select className="w-full p-4 bg-slate-50 rounded-2xl outline-none font-bold text-midnight border-2 border-transparent focus:border-primary-yellow transition-all" value={newCake.category} onChange={e => setNewCake({ ...newCake, category: e.target.value })}>
+                  {globalCategories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+                </select>
+              </div>
+              <button onClick={handleAddGlobalCake} className="w-full bg-midnight text-white py-5 rounded-2xl font-black uppercase tracking-widest text-[11px] shadow-xl hover:scale-[1.02] active:scale-95 transition-all">
                 Add to Global Seeds
-               </button>
+              </button>
             </div>
           </div>
         </div>
